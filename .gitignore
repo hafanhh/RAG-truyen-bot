@@ -1,0 +1,27 @@
+# Secrets
+.env
+
+# Virtualenv
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
+
+# Data sinh ra (giữ thư mục, bỏ nội dung)
+data/chunks/*
+!data/chunks/.gitkeep
+# Vector store local và cache embedding (sinh ra từ văn bản truyện có bản quyền)
+data/chroma/
+data/embeddings/
+data/traces/
+data/*.db
+Books/
+data/eval/reviews/

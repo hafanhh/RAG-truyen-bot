@@ -1,0 +1,92 @@
+{
+  "world_no": 1,
+  "about": "Bộ câu hỏi do NGƯỜI DÙNG soạn (10 câu, giữ nguyên số thứ tự H01-H10). Đáp án nguồn do Claude tìm bằng cách tìm chuỗi nguyên văn và đọc văn bản gốc, ghi TRƯỚC khi chạy retrieval cho bộ này. Cần người dùng kiểm lại với file gốc.",
+  "evidence_rule": "Giống data/eval/questions_w01.json: evidence là danh sách các NHÓM; mỗi nhóm là các đoạn [chương, số đoạn 1-based] thay thế nhau (chỉ cần MỘT đoạn); muốn đủ bằng chứng thì MỌI nhóm phải được phủ bởi ít nhất một chunk trong top-k.",
+  "revision_log": [
+    "r1 (2026-11-11): bản đầu, ghi trước khi chạy retrieval lần nào cho bộ này.",
+    "r3 (2026-11-12): H09 tách thành 2 nhóm bằng chứng như Q09 (xem revision_log của questions_w01.json).",
+    "r2 (2026-11-11): sửa SAU khi chạy retrieval, khi đọc đầy đủ các chunk sai đứng trên chunk đúng (H02, H03, H04 có chunk đúng ở hạng 3). Các chunk đó hóa ra là bằng chứng hợp lệ mà r1 bỏ sót, nên đáp án r1 bị THIẾU (làm số liệu r1 bị chấm thấp). Thay đổi: H02 thêm ch10 đ6 (Lãnh Tử Việt nói rõ lý do: Kỳ Kỳ trở về, hắn chỉ coi Đường Quả là bóng dáng của Kỳ Kỳ); H03 thêm ch10 đ8 (Đường Quả đánh ngáp, đáp thản nhiên) và ch59 đ11-12 (nàng quay đầu quên hắn, không như hắn tưởng); H04 thêm ch10 đ7 (hắn nói sẽ bồi thường mọi thứ). Số liệu r1 (plain top-1 4/10, header 4/10; hybrid hit@5 10/10) tính theo đáp án cũ. Không đổi các câu khác."
+  ],
+  "questions": [
+    {
+      "id": "H01",
+      "type": "tự nhiên, không nêu tên",
+      "question": "Ở đầu truyện, cô gái đang cầm gì trong tay?",
+      "evidence": [[[1, 5], [1, 19]]],
+      "expected_answer": "Một ly trà sữa.",
+      "note": "Gần trùng Q01 của bộ cũ. Mơ hồ: cũng trong chương 1 nàng cầm chi phiếu (đ19) và bút (đ26), nên chunk chứa các đoạn đó có thể bị coi là 'sai' dù trả lời được một nghĩa khác; đáp án chấm chặt theo ly trà sữa (đ5, đ19)."
+    },
+    {
+      "id": "H02",
+      "type": "hỏi nguyên nhân",
+      "question": "Vì sao Lãnh Tử Việt muốn chia tay Đường Quả?",
+      "evidence": [[[1, 2], [1, 3], [1, 4], [1, 7], [10, 6]]],
+      "expected_answer": "Vì Lục Kỳ (người hắn không quên được) đã trở về và đồng ý ở bên hắn; hắn yêu Lục Kỳ chứ không phải Đường Quả.",
+      "note": "Câu hỏi dùng 'chia tay', sách cũng dùng 'chia tay'."
+    },
+    {
+      "id": "H03",
+      "type": "hỏi phản ứng (nhiều chi tiết)",
+      "question": "Đường Quả phản ứng thế nào khi nghe lời chia tay?",
+      "evidence": [[[1, 6], [1, 10], [1, 14], [1, 17], [1, 18], [10, 8], [59, 11], [59, 12]]],
+      "expected_answer": "Ban đầu rũ đầu, run rẩy như đang khóc; rồi ngẩng lên với vẻ bình tĩnh, mỉm cười và cười thành tiếng (nụ cười quỷ dị), khiến Lãnh Tử Việt tưởng nàng không chấp nhận được.",
+      "note": "Chỉ cần MỘT trong các đoạn phản ứng là nhóm được phủ; câu trả lời đầy đủ cần nhiều đoạn nhưng nhóm này chấm khoan dung."
+    },
+    {
+      "id": "H04",
+      "type": "hỏi mục đích",
+      "question": "Lãnh Tử Việt đưa tờ chi phiếu cho Đường Quả để làm gì?",
+      "evidence": [[[1, 9], [2, 15], [2, 20], [10, 7]]],
+      "expected_answer": "Để bồi thường cho nàng sau khi chia tay.",
+      "note": "'bồi thường' ở ch1 đ9 và ch2 đ15, đ20."
+    },
+    {
+      "id": "H05",
+      "type": "hỏi 'ai'",
+      "question": "Ai là người quyết định số tiền ghi trên tờ chi phiếu?",
+      "evidence": [[[1, 9], [1, 20], [1, 21], [1, 27], [2, 15], [2, 17]]],
+      "expected_answer": "Chính Đường Quả (Lãnh Tử Việt bảo nàng tự điền, 'tùy tiện').",
+      "note": "Câu hỏi không có tên riêng; ý chính ở các đoạn nói 'chính ngươi điền đi'/'tùy tiện ta điền sao'."
+    },
+    {
+      "id": "H06",
+      "type": "hỏi con số",
+      "question": "Đường Quả đã điền bao nhiêu tiền vào chi phiếu?",
+      "evidence": [[[1, 30], [2, 13], [2, 14], [2, 15], [2, 21]]],
+      "expected_answer": "Năm ngàn vạn (sau đó, ở chương 2, nàng bảo đổi thành chi phiếu 3000 vạn kèm một giấy nợ 2000 vạn).",
+      "note": "Có nuance: số điền là 5000 vạn (ch1 đ30, ch2 đ13-15, đ21) nhưng chi phiếu cuối là 3000 vạn (ch2 đ17, ch3 đ3). Nhóm bằng chứng chỉ tính phần 5000 vạn."
+    },
+    {
+      "id": "H07",
+      "type": "vật cụ thể",
+      "question": "Lãnh Tử Việt đưa cho cô loại bút gì để ký?",
+      "evidence": [[[1, 26], [2, 1]]],
+      "expected_answer": "Một cây bút máy.",
+      "note": "Gần trùng Q03 của bộ cũ."
+    },
+    {
+      "id": "H08",
+      "type": "hỏi 'ai' (quan hệ), có đoạn bẫy",
+      "question": "Ai là cha nuôi của Lãnh Tử Việt?",
+      "evidence": [[[7, 5], [16, 20], [58, 8], [58, 37], [61, 1], [72, 22]]],
+      "expected_answer": "Lãnh Duệ.",
+      "note": "Bẫy: ch81 đ20 nói 'Đường Tranh' là con nuôi nhà họ Đường (người khác). Truyện cũng gọi Lãnh Duệ là 'ba', không dùng cụm 'cha nuôi'."
+    },
+    {
+      "id": "H09",
+      "type": "vật cụ thể (TRÙNG Q09)",
+      "question": "Lãnh Duệ đưa cho Đường Quả quyển sách gì?",
+      "evidence": [[[75, 29]], [[75, 30], [75, 31]]],
+      "expected_answer": "Một quyển sách các kiểu áo cưới.",
+      "note": "Trùng hoàn toàn Q09 của bộ cũ; khi gộp hai bộ chỉ tính một lần. r3: hai nhóm bằng chứng như Q09 (đ29 người đưa, đ30-31 nội dung)."
+    },
+    {
+      "id": "H10",
+      "type": "hỏi nguyên nhân (cần 2 mẩu)",
+      "question": "Vì sao Lãnh Duệ không muốn Đường Quả dùng tên và ngày sinh của mình?",
+      "evidence": [[[77, 15]], [[77, 12], [77, 13], [77, 14], [77, 19], [77, 20]]],
+      "expected_answer": "Vì nữ chính trong cuốn sách (mang tên và sinh nhật 9/9 của nàng) có kết cục bi kịch (tự sát vào sinh nhật), Lãnh Duệ thấy kết cục đó không tốt.",
+      "note": "Nhóm 1: lời Lãnh Duệ (đ15). Nhóm 2: lý do kết cục bi kịch (đ12-14, đ19-20)."
+    }
+  ]
+}

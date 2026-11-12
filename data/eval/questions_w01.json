@@ -1,0 +1,109 @@
+{
+  "world_no": 1,
+  "about": "Bộ câu hỏi đánh giá retrieval cho World 01. Đáp án nguồn (evidence) được ghi TRƯỚC khi chạy retrieval lần nào, bằng cách đọc văn bản gốc và tìm chuỗi nguyên văn, không dựa vào kết quả embedding. Cần người dùng kiểm lại với file gốc.",
+  "evidence_rule": "evidence là danh sách các NHÓM. Mỗi nhóm là danh sách các đoạn [chương, số đoạn 1-based] mà CHỈ CẦN MỘT trong số đó chứa đáp án (các lựa chọn thay thế). Muốn đủ bằng chứng thì MỌI nhóm phải được phủ. Một chunk 'trúng' nếu khoảng para_start..para_end của nó (cùng chương) chứa ít nhất một đoạn trong một nhóm nào đó. Chunk có overlap nên một đoạn có thể nằm trong 2 chunk.",
+  "revision_log": [
+    "r1 (2026-11-11): bản đầu, ghi trước khi chạy retrieval lần nào.",
+    "r4 (2026-11-12): Q07 nhóm 2 thêm ch75 đ11 (Lãnh Duệ nói với Lãnh Tử Việt qua điện thoại, tức gọi Đường Quả là mẹ). Phát hiện nhờ lượt kiểm tra bằng LLM (Step 7) khi nó chỉ ra chunk c075-k00 đã được gửi cho lượt trả lời có chứa thông tin này; đã đọc đ11 để xác nhận. Sau r4, Q07 ở mốc là 'đủ bằng chứng nhưng câu trả lời bỏ sót phần đã có', không còn là 'thiếu bằng chứng'. Đây là lần sửa thứ tư của bộ này, đều làm SAU khi thấy kết quả.",
+    "r3 (2026-11-12): Q09 tách thành 2 nhóm bằng chứng (đ29 người đưa sách; đ30-31 nội dung sách) sau khi chạy answer() ở Step 5 và thấy LLM từ chối khi chunk gửi đi thiếu đ29. Số liệu retrieval trước r3 (Step 3-4) tính Q09 theo 1 nhóm nên đánh giá cao 'đủ bằng chứng'.",
+    "r2 (2026-11-11): sửa SAU lần chạy đầu, khi đọc đầy đủ chunk đáp án và chunk sai đứng đầu để kiểm tra bộ đáp án (việc 1 của bước chẩn đoán). Kết quả của r1 (plain top-1 6/10, header 3/10...) tính theo đáp án cũ nên không so trực tiếp được. Thay đổi: Q06 viết lại cho hết mơ hồ (chương 20 cũng là một lần Lãnh Tử Việt nhờ cha giúp Lục Kỳ, Lãnh Duệ đáp 'ngươi an bài là được'); Q07 nhóm 2 thêm ch60 đ10 và ch73 đ26 (Lãnh Duệ nói 'mẹ ngươi' / 'các ngươi mẹ'); Q10 thêm ch73 đ28-31 (lần đầu Lục Kỳ biết, đáp án tốt nhất) và ch75 đ16. Không đổi gì ở các câu khác."
+  ],
+  "questions": [
+    {
+      "id": "Q01",
+      "type": "tự nhiên, không nêu tên",
+      "question": "Ở cảnh mở đầu truyện, cô gái cúi đầu, hai tay nắm chặt thứ gì?",
+      "evidence": [[[1, 5]]],
+      "expected_answer": "Một ly trà sữa.",
+      "note": "Cặp với Q02 (cùng đáp án, khác cách diễn đạt). Đoạn nguồn chỉ nói 'nữ hài', không có tên Đường Quả."
+    },
+    {
+      "id": "Q02",
+      "type": "từ vựng convert của sách",
+      "question": "Nữ hài rũ đầu, đôi tay gắt gao thủ sẵn thứ gì?",
+      "evidence": [[[1, 5]]],
+      "expected_answer": "Một ly trà sữa.",
+      "note": "Cặp với Q01: dùng đúng từ của sách ('nữ hài', 'rũ đầu', 'gắt gao', 'thủ sẵn')."
+    },
+    {
+      "id": "Q03",
+      "type": "có tên riêng + vật cụ thể (câu dễ)",
+      "question": "Lãnh Tử Việt đưa cho Đường Quả loại bút gì?",
+      "evidence": [[[1, 26], [2, 1]]],
+      "expected_answer": "Một cây bút máy.",
+      "note": "Chương 2 đoạn 1 (Đường Quả trả lại bút máy) cũng chứa đáp án."
+    },
+    {
+      "id": "Q04",
+      "type": "trích lời nhân vật",
+      "question": "Đường Quả đăng Weibo nói gì về kim chủ của mình?",
+      "evidence": [[[14, 14]]],
+      "expected_answer": "Rằng kim chủ của nàng rất lợi hại, hắn một câu thì không ai dám mắng nàng, ai mắng nàng thì người đó xui xẻo.",
+      "note": "'kim chủ' xuất hiện ở 37 đoạn của truyện nên dễ nhiễu."
+    },
+    {
+      "id": "Q05",
+      "type": "có đoạn bẫy (cùng chủ đề, khác nhân vật)",
+      "question": "Lãnh Tử Việt được Lãnh Duệ nhận về từ đâu?",
+      "evidence": [[[58, 8], [58, 37], [61, 1]]],
+      "expected_answer": "Từ cô nhi viện (Lãnh Duệ nhặt hắn về ở cửa cô nhi viện).",
+      "note": "Bẫy: chương 13 đoạn 2 nói ĐƯỜNG QUẢ lớn lên ở cô nhi viện, không phải đáp án."
+    },
+    {
+      "id": "Q06",
+      "type": "cần 2 mẩu bằng chứng (cùng chương)",
+      "question": "Lãnh Tử Việt xin cha giúp thêm một danh ngạch cho Lục Kỳ vào chương trình âm nhạc đang hot, Lãnh Duệ đáp lại bằng cách nào?",
+      "evidence": [[[33, 20], [33, 21]], [[33, 31]]],
+      "expected_answer": "Nhờ thêm một danh ngạch cho Lục Kỳ vào chương trình âm nhạc; Lãnh Duệ ném cho hắn một tấm danh thiếp (số điện thoại riêng của người tổ chức) bảo tự gọi.",
+      "note": "Hai nhóm bằng chứng: lời nhờ (đoạn 20-21) và danh thiếp (đoạn 31). Câu cũ ('nhờ cha giúp Lục Kỳ chuyện gì') mơ hồ vì chương 20 đoạn 2-12 là một sự kiện khác tương tự (xin cho Lục Kỳ ký Tinh Vân âm nhạc, Lãnh Duệ từ chối) nên đã viết lại; sự kiện chương 20 không phải đáp án của câu này."
+    },
+    {
+      "id": "Q07",
+      "type": "cần 2 mẩu bằng chứng (khác chương)",
+      "question": "Đường Quả dọn khỏi biệt thự vào ngày nào, và sau đó Lãnh Duệ nói nàng là gì của Lãnh Tử Việt?",
+      "evidence": [[[33, 7]], [[58, 13], [58, 14], [60, 10], [73, 26], [75, 11]]],
+      "expected_answer": "Nàng dọn đi đúng ngày chung kết cuộc thi 'Êm tai chi âm'; Lãnh Duệ tuyên bố từ nay nàng là mẹ của Lãnh Tử Việt.",
+      "note": "Nhóm 1 chỉ ở chương 33. Nhóm 2 có nhiều nơi nói 'mẹ ngươi' (ch58 đ13-14, ch60 đ10, ch73 đ26) nên chunk nhóm 2 luôn ở chương khác chương 33: không bao giờ cùng một chunk với nhóm 1."
+    },
+    {
+      "id": "Q08",
+      "type": "biệt danh / alias",
+      "question": "Nếu không muốn gọi nàng là mẹ, Đường Quả bảo Lãnh Tử Việt gọi nàng là gì?",
+      "evidence": [[[58, 28], [58, 30], [58, 33]]],
+      "expected_answer": "Gọi là 'Tiểu Quả a di'.",
+      "note": "Đoạn nguồn dùng 'Tiểu Quả' (alias), không dùng 'Đường Quả'."
+    },
+    {
+      "id": "Q09",
+      "type": "có tên riêng + vật cụ thể",
+      "question": "Lãnh Duệ đưa cho Đường Quả quyển sách gì?",
+      "evidence": [[[75, 29]], [[75, 30], [75, 31]]],
+      "expected_answer": "Một quyển sách các kiểu áo cưới.",
+      "note": "r3: hai nhóm bằng chứng. Đoạn 29 là đoạn DUY NHẤT nói Lãnh Duệ đưa quyển sách cho Đường Quả; đoạn 30-31 nói đó là sách kiểu áo cưới. Bản r1/r2 chỉ ghi đoạn 30-31 nên coi chunk c075-k03 (đ30-41) là 'đủ', nhưng khi chỉ gửi chunk đó thì LLM không biết ai đưa sách (Step 5, prompt v3)."
+    },
+    {
+      "id": "Q10",
+      "type": "tự nhiên vs từ vựng sách ('mẹ chồng' = 'bà bà')",
+      "question": "Lục Kỳ phản ứng thế nào khi biết Đường Quả trở thành mẹ chồng của mình?",
+      "evidence": [[[73, 28], [73, 29], [73, 30], [73, 31], [75, 3], [75, 6], [75, 16], [75, 23]]],
+      "expected_answer": "Sốc và rất khó chịu (ch73: 'cả người đều không tốt'; ch75: tức đến phun huyết), vì tình địch mình ghét nhất lại thành mẹ/bà bà của mình.",
+      "note": "Sách dùng 'bà bà' / 'mẹ', câu hỏi dùng 'mẹ chồng'. Lúc Lục Kỳ lần đầu biết là ch73 đ26-31 (bản r1 bỏ sót), ch75 là phản ứng sau đó."
+    },
+    {
+      "id": "U1",
+      "type": "KHÔNG có trong truyện",
+      "question": "Lãnh Duệ tặng Đường Quả sợi dây chuyền kim cương giá bao nhiêu?",
+      "evidence": [],
+      "expected_answer": "Truyện không nói (không có thông tin).",
+      "note": "Đã tìm chuỗi trên cả 81 chương: 'kim cương', 'toản thạch', 'dây chuyền', 'vòng cổ' đều 0 kết quả."
+    },
+    {
+      "id": "U2",
+      "type": "KHÔNG có trong truyện",
+      "question": "Đường Quả đã đến Paris hay Tokyo biểu diễn lần nào chưa?",
+      "evidence": [],
+      "expected_answer": "Truyện không nói (không có thông tin).",
+      "note": "Đã tìm chuỗi trên cả 81 chương: các tên thành phố/nước (Paris, Tokyo, Bắc Kinh, Thượng Hải...) đều 0 kết quả."
+    }
+  ]
+}

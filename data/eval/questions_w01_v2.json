@@ -1,0 +1,358 @@
+{
+ "world_no": 1,
+ "version": "v2",
+ "about": "Bộ câu hỏi V2 (19 câu: 10 nội dung N01-N10, 3 ngoài truyện U01-U03, 3 cặp paraphrase P1-P3) do người dùng đưa; Claude kiểm tiền đề và tìm đáp án nguồn bằng ĐỌC VĂN BẢN GỐC và tìm chuỗi (KHÔNG chạy retrieval/trace nào trên bộ này trước khi khóa). Khóa bằng sha256 trong data/eval/questions_w01_v2.lock.json; sau khóa không sửa gold, nghi vấn ghi vào data/eval/questions_w01_v2.notes.json.",
+ "evidence_rule": "Giống data/eval/questions_w01.json: evidence là danh sách các NHÓM; mỗi nhóm là các đoạn [chương, số đoạn 1-based] thay thế nhau (chỉ cần MỘT đoạn); muốn đủ bằng chứng thì MỌI nhóm phải được phủ. Câu không có đáp án: evidence = [].",
+ "scoring_rule": "Báo điểm TÁCH RIÊNG: (1) 10 câu nội dung N01-N10; (2) 3 câu ngoài truyện U01-U03 (đúng = từ chối/nói truyện không đề cập, không bịa); (3) 3 CẶP paraphrase P1-P3, mỗi cặp một đơn vị (cả hai đúng / một đúng / không), vì hai câu cùng cặp không phải tình huống độc lập. Không cộng gộp 19 câu thành một tỷ lệ.",
+ "caveats": [
+  "Không mù: câu hỏi cho thấy được soạn khi đã đọc văn bản (N05 'chim hoàng yến', P2b/P3b dùng nguyên chữ của truyện), không phải từ trí nhớ.",
+  "Tập trung cảnh: N01-N04, P2a, P2b đều ở ch1-2 (6/16 câu có đáp án) và cảnh này cũng là cảnh pipeline đã được tinh chỉnh nhiều ở V1.",
+  "Chồng bộ cũ: P1 cùng cảnh Q09/H09, N01 gần H02, P2 gần H03/H01; N06-N07 chung một đoạn nguồn; N09-N10 liên quan quyển sách như Q09/Q10.",
+  "P3a có 2 nơi hợp lệ, P3b chỉ 1 (xem note)."
+ ],
+ "revision_log": [
+  "r1 (2026-11-12): bản khóa đầu tiên, ghi trước mọi lần chạy retrieval cho bộ này. Thay đổi so với bản người dùng đưa: P1a dùng bản trung tính 'Khi bàn chuyện cưới, Đường Quả xem những mẫu trang phục nào trong sách?' (bản gốc giả định nàng chủ động yêu cầu; thực tế ch75 đ29-30 Lãnh Duệ đưa sách cho nàng). Không loại câu nào; tiền đề của 18 câu còn lại được xác nhận từ văn bản (U03 giữ nhưng ghi là 'tiền đề không được xác nhận').",
+  "r2 (2026-11-12, SAU lượt baseline 20261112-155327 do người khác chạy): repo public nên rút trích dẫn nguyên văn khỏi note (N01, P2a, P3a) và expected_answer (N04, N05, P3b), nghĩa giữ nguyên. question/evidence/set/pair/id giữ nguyên từng byte so với commit 56261fd (kiểm bằng `scripts/v2_step3_eval_lock.py --diff-gold`). Hash khóa đổi phạm vi: chỉ các trường gold (id, question, evidence, set, pair, expected_answer), bỏ note và type. Review Codex của baseline đã chấm theo expected_answer r1."
+ ],
+ "questions": [
+  {
+   "id": "N01",
+   "set": "content",
+   "type": "tự nhiên, có tên",
+   "question": "Khi nói lời chia tay, Lãnh Tử Việt cho biết mình muốn ở bên ai?",
+   "evidence": [
+    [
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      7
+     ]
+    ]
+   ],
+   "expected_answer": "Lục Kỳ (gọi là Kỳ Kỳ): hắn nói Kỳ Kỳ đã đồng ý ở bên hắn và hắn không muốn bỏ qua nàng.",
+   "note": "'Kỳ Kỳ' là biệt danh của Lục Kỳ; tên đầy đủ chỉ lộ ở đ7 (lời người kể: hắn yêu Lục Kỳ), nên câu trả lời đúng cần nối được hai cách gọi. Cùng cảnh với H02 của bộ cũ."
+  },
+  {
+   "id": "N02",
+   "set": "content",
+   "type": "chi tiết nhỏ",
+   "question": "Trước khi Đường Quả điền tiền, Lãnh Tử Việt đã viết gì lên tờ chi phiếu?",
+   "evidence": [
+    [
+     [
+      1,
+      8
+     ]
+    ]
+   ],
+   "expected_answer": "Chỉ ký tên (chi phiếu để trống, bảo Đường Quả tự điền).",
+   "note": "Dễ nhầm với ch2 đ22 (sau đó Lãnh Tử Việt tự viết chi phiếu 3000 vạn và giấy nợ): câu hỏi nói 'trước khi Đường Quả điền' nên nhắm đ8. ch1 đ19 xác nhận chi phiếu còn 'chỗ trống' nhưng không trả lời được 'viết gì'."
+  },
+  {
+   "id": "N03",
+   "set": "content",
+   "type": "chi tiết nhỏ, đầu chương",
+   "question": "Đường Quả làm gì ngay sau khi trả lại bút máy cho Lãnh Tử Việt?",
+   "evidence": [
+    [
+     [
+      2,
+      1
+     ]
+    ]
+   ],
+   "expected_answer": "Cầm chi phiếu lên thổi, như muốn hong khô nét mực.",
+   "note": "Đoạn đầu chương 2. ch1 đ19 nàng cũng thổi chi phiếu nhưng TRƯỚC khi mượn bút nên là nhiễu."
+  },
+  {
+   "id": "N04",
+   "set": "content",
+   "type": "có/không, dẫn dắt",
+   "question": "Sau khi điền chi phiếu, Đường Quả có hỏi mình được mang nó đi đổi tiền bất cứ lúc nào không?",
+   "evidence": [
+    [
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      9
+     ]
+    ]
+   ],
+   "expected_answer": "Có: nàng hỏi (đ5) liệu có thể dùng bất cứ lúc nào, rồi hỏi lại (đ9) liệu nàng có thể thực hiện chi phiếu tùy thời; Lãnh Tử Việt đồng ý cả hai lần (đ6, đ10).",
+   "note": "Câu có/không nên dễ đoán 'có' mà không cần nguồn: chấm cả việc trích đúng lời hỏi của nàng."
+  },
+  {
+   "id": "N05",
+   "set": "content",
+   "type": "tự nhiên, ở xa đầu truyện",
+   "question": "Khi nói muốn làm “chim hoàng yến”, Đường Quả đang từ chối cách gọi nào mà Lãnh Duệ vừa đề nghị?",
+   "evidence": [
+    [
+     [
+      52,
+      25
+     ]
+    ]
+   ],
+   "expected_answer": "Cách gọi 'Lãnh thái thái' (vợ của Lãnh Duệ): hắn đề nghị ở đ25, nàng từ chối (đ27, 'Không tốt') rồi nói thích làm sủng vật, cụ thể là chim hoàng yến (đ30).",
+   "note": "'chim hoàng yến' chỉ xuất hiện đúng 1 lần trong 81 chương (ch52 đ30) nên là mỏ neo từ khóa mạnh; đáp án nằm ở đ25, cách đ30 năm đoạn."
+  },
+  {
+   "id": "N06",
+   "set": "content",
+   "type": "chi tiết",
+   "question": "Đường Quả đã thêm gì vào thiết bị nghe nhạc của Lãnh Duệ trước khi trả lại?",
+   "evidence": [
+    [
+     [
+      53,
+      11
+     ],
+     [
+      53,
+      12
+     ]
+    ]
+   ],
+   "expected_answer": "Thêm ca khúc: máy có nhiều bài hát hơn (nàng nói đó là mấy trăm bài hát của nàng).",
+   "note": "Thiết bị nghe nhạc = 'âm nhạc máy chiếu' trong bản convert. Dùng từ tự nhiên 'thiết bị nghe nhạc', không khớp từ vựng truyện."
+  },
+  {
+   "id": "N07",
+   "set": "content",
+   "type": "trích lời",
+   "question": "Đường Quả nói gì về khả năng mình sẽ có thêm bài hát mới sau khi giao những bài hát ấy cho Lãnh Duệ?",
+   "evidence": [
+    [
+     [
+      53,
+      12
+     ]
+    ]
+   ],
+   "expected_answer": "Nàng nói đó là tất cả ca khúc cả đời nàng và sẽ không có bài mới nữa ('sẽ không lại có tân').",
+   "note": "Cùng đoạn với N06 (c53 đ12), hai câu không độc lập về nguồn."
+  },
+  {
+   "id": "N08",
+   "set": "content",
+   "type": "chi tiết, liệt kê",
+   "question": "Khi bàn chuyện tổ chức hôn lễ, Đường Quả nhắc Lãnh Duệ sẽ phải làm những hành động nào với nàng?",
+   "evidence": [
+    [
+     [
+      75,
+      34
+     ]
+    ]
+   ],
+   "expected_answer": "Ôm nàng, nắm nàng và hôn nàng (nàng hỏi hắn có làm được không).",
+   "note": "ch78 đ19 cũng nói hôn lễ buộc có tiếp xúc cơ thể nhưng là suy nghĩ của Lãnh Duệ, không phải lời nhắc của nàng: không tính là bằng chứng."
+  },
+  {
+   "id": "N09",
+   "set": "content",
+   "type": "nguyên nhân, hai vế",
+   "question": "Vì sao Trần Việt Sinh gọi điện hỏi Đường Quả liệu mình từng làm nàng phật lòng?",
+   "evidence": [
+    [
+     [
+      77,
+      24
+     ]
+    ],
+    [
+     [
+      77,
+      29
+     ],
+     [
+      77,
+      30
+     ]
+    ]
+   ],
+   "expected_answer": "Sau khi đọc quyển sách (kết cục khác do Đường Quả viết), hắn nhận ra mình là nguyên mẫu của một nhân vật bị viết rất đáng ghét (ngáng chân, an bài tình tiết lão nam nhân), nên tưởng nàng giận mình.",
+   "note": "Hai nhóm bằng chứng: vế 'đọc sách và thấy mình là nguyên mẫu' (đ24) và vế 'bị viết đáng ghét' (đ29 hoặc đ30). Cuộc gọi lúc ch77 đ25-27 là câu hỏi 'đắc tội/không cao hứng'; các cuộc gọi khác của hắn (ch42, ch63) không liên quan."
+  },
+  {
+   "id": "N10",
+   "set": "content",
+   "type": "liệt kê, cuối truyện",
+   "question": "Theo lời hệ thống ở cuối thế giới này, những ai đã viết lại kết cục quyển sách của Đường Quả?",
+   "evidence": [
+    [
+     [
+      81,
+      3
+     ]
+    ]
+   ],
+   "expected_answer": "Ba người: Lãnh Duệ, Trần Việt Sinh và Lãnh Tử Việt (bản của Lãnh Tử Việt chưa thể xuất bản).",
+   "note": "Chương cuối (ch81). Chỉ đ3 liệt kê đủ ba người; đ6, đ9, đ11 mô tả từng bản nên mỗi đoạn chỉ đủ một phần: trả lời thiếu người là trả lời một phần."
+  },
+  {
+   "id": "U01",
+   "set": "unanswerable",
+   "type": "KHÔNG có trong truyện",
+   "question": "Đường Quả sinh tại bệnh viện nào?",
+   "evidence": [],
+   "expected_answer": "Truyện không nói (không có thông tin).",
+   "note": "Tìm chuỗi trên 81 chương: 'bệnh viện' xuất hiện ở ch25, 62, 63, 70, 79 đều là khám bệnh/ung thư, không nói nơi sinh; 'sinh ra/sinh tại/sinh ở/nơi sinh' chỉ cho kết quả không liên quan (ch53 đ21 nói Lãnh Duệ sinh ở nhà họ Lãnh; ch77 đ14 chỉ nói ngày sinh nhật 9/9)."
+  },
+  {
+   "id": "U02",
+   "set": "unanswerable",
+   "type": "KHÔNG có trong truyện",
+   "question": "Mật khẩu tài khoản ngân hàng của Lãnh Tử Việt là gì?",
+   "evidence": [],
+   "expected_answer": "Truyện không nói (không có thông tin).",
+   "note": "Tìm 'mật khẩu', 'mật mã', 'password', 'số tài khoản', 'thẻ ngân hàng', 'ngân hàng': 0 kết quả về mật khẩu; 'ngân hàng' chỉ ở ch2-3 (Đường Quả đi đổi chi phiếu, thẻ của nàng), nhiễu thuộc cùng cảnh chi phiếu."
+  },
+  {
+   "id": "U03",
+   "set": "unanswerable",
+   "type": "KHÔNG có trong truyện, tiền đề không được xác nhận",
+   "question": "Người pha ly trà sữa trong cảnh mở đầu có họ tên đầy đủ là gì?",
+   "evidence": [],
+   "expected_answer": "Truyện không nói: cảnh mở đầu không nhắc ai pha trà sữa, cũng không có nhân viên quán nào được nêu tên (có thể nói rõ truyện không đề cập).",
+   "note": "Tìm 'pha', 'nhân viên', 'phục vụ', 'chủ tiệm', 'quầy', 'trà sữa': cảnh ch1-2 chỉ có 'tiệm trà sữa' và ly trà sữa của Đường Quả, không người pha nào. Tiền đề 'có người pha' không được nguồn xác nhận nên câu thuộc loại tiền đề giả; hành vi đúng là nói truyện không đề cập, không bịa tên."
+  },
+  {
+   "id": "P1a",
+   "set": "paraphrase",
+   "type": "paraphrase, bản trung tính (đã sửa theo yêu cầu)",
+   "question": "Khi bàn chuyện cưới, Đường Quả xem những mẫu trang phục nào trong sách?",
+   "evidence": [
+    [
+     [
+      75,
+      30
+     ],
+     [
+      75,
+      31
+     ]
+    ]
+   ],
+   "expected_answer": "Các kiểu dáng áo cưới.",
+   "note": "Đã sửa trước khi khóa: bản gốc 'Đường Quả yêu cầu được xem...' giả định nàng chủ động, nhưng ch75 đ29-30 là Lãnh Duệ đưa sách cho nàng. Cùng cảnh với Q09/H09 cũ; ở đây đáp án nằm ở đ30-31 (cùng chunk đ30-41), dễ hơn Q09 vốn cần đ29.",
+   "pair": "P1"
+  },
+  {
+   "id": "P1b",
+   "set": "paraphrase",
+   "type": "paraphrase, dùng từ vựng truyện",
+   "question": "Khi nói chuyện hôn lễ, quyển sách Đường Quả mở ra chứa các kiểu dáng gì?",
+   "evidence": [
+    [
+     [
+      75,
+      30
+     ],
+     [
+      75,
+      31
+     ]
+    ]
+   ],
+   "expected_answer": "Các kiểu dáng áo cưới.",
+   "note": "Nhiễu: ch77 cũng có 'quyển sách' (quyển tiểu thuyết kết cục bi kịch).",
+   "pair": "P1"
+  },
+  {
+   "id": "P2a",
+   "set": "paraphrase",
+   "type": "paraphrase, tự nhiên",
+   "question": "Lãnh Tử Việt ban đầu nghĩ Đường Quả đang có cảm xúc gì khi cô cúi đầu và run rẩy?",
+   "evidence": [
+    [
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      10
+     ]
+    ]
+   ],
+   "expected_answer": "Nghĩ nàng đau buồn, đang khóc (vốn tưởng nàng đã rơi lệ đầy mặt).",
+   "note": "đ10 nói rõ niềm tin của hắn (hắn tưởng nàng sớm đã rơi lệ); đ6 là mô tả dẫn dắt (khóc thút thít). ch1 đ18 ('cho rằng nàng không tiếp thu được chia tay') là liên quan nhưng không trả lời trực tiếp câu hỏi. Gần H03 cũ.",
+   "pair": "P2"
+  },
+  {
+   "id": "P2b",
+   "set": "paraphrase",
+   "type": "paraphrase, dùng từ vựng truyện",
+   "question": "Thấy nữ hài rũ đầu, thân hình run rẩy, Lãnh Tử Việt tưởng nàng đang thế nào?",
+   "evidence": [
+    [
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      10
+     ]
+    ]
+   ],
+   "expected_answer": "Nghĩ nàng đau buồn, đang khóc (vốn tưởng nàng đã rơi lệ đầy mặt).",
+   "note": "Dùng nguyên chữ 'nữ hài', 'rũ đầu', 'thân hình run rẩy' của ch1 đ5-6.",
+   "pair": "P2"
+  },
+  {
+   "id": "P3a",
+   "set": "paraphrase",
+   "type": "paraphrase, tự nhiên",
+   "question": "Lãnh Duệ hứa sẽ giúp sự nghiệp ca hát của Đường Quả thành công đến mức nào?",
+   "evidence": [
+    [
+     [
+      35,
+      40
+     ],
+     [
+      35,
+      41
+     ],
+     [
+      53,
+      14
+     ]
+    ]
+   ],
+   "expected_answer": "Hỏa biến toàn thế giới (hắn nói sẽ phủng nàng).",
+   "note": "Cùng một lời hứa của Lãnh Duệ xuất hiện HAI lần: ch35 đ40-41 (hắn nói sẽ phủng nàng, làm nàng nổi khắp thế giới) và ch53 đ14. Vì câu này không nêu bối cảnh nên cả hai nơi đều hợp lệ. Loại trừ: ch5 đ36 là yêu cầu của Đường Quả, ch21 đ2 là lời trong giấc mơ về 'kim chủ mới' khác.",
+   "pair": "P3"
+  },
+  {
+   "id": "P3b",
+   "set": "paraphrase",
+   "type": "paraphrase, dùng từ vựng truyện + bối cảnh",
+   "question": "Khi giữ những bài ca của Đường Quả, Lãnh Duệ hứa sẽ phủng nàng đến mức nào?",
+   "evidence": [
+    [
+     [
+      53,
+      14
+     ]
+    ]
+   ],
+   "expected_answer": "Hỏa biến thế giới (hắn hứa sẽ phủng nàng, ch53 đ14).",
+   "note": "Bối cảnh 'giữ bài ca' chỉ khớp ch53 đ13-14. Quy tắc chấm đã đăng ký trước: trích ch35 đ40-41 cho câu này là 'đúng nội dung, sai cảnh', không tính là trúng bằng chứng. Hệ quả: P3a có 2 nơi hợp lệ, P3b chỉ 1, nên so P3a với P3b không công bằng tuyệt đối.",
+   "pair": "P3"
+  }
+ ]
+}

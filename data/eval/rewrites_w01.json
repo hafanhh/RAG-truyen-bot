@@ -1,0 +1,52 @@
+{
+ "Q01": {
+  "kind": "rewrite",
+  "question": "Ở cảnh mở đầu truyện, cô gái cúi đầu, hai tay nắm chặt thứ gì?",
+  "variants": [
+   "Tại sơ kỳ của tiểu thuyết, nữ hài cúi đầu, song thủ khẩn nắm chi vật là cái gì?",
+   "Tại cảnh khai màn đích cố sự, nữ hài low đầu, song thủ khẩn nã vật gì?"
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "generated_at": "2026-11-12T15:13:17"
+ },
+ "H01": {
+  "kind": "rewrite",
+  "question": "Ở đầu truyện, cô gái đang cầm gì trong tay?",
+  "variants": [
+   "Tại sơ kỳ chi truyện, nữ hài thủ trung chính ác trước vật gì?",
+   "Ở đầu truyện, nữ hài thủ trung đang cầm cái gì?"
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "generated_at": "2026-11-12T15:13:20"
+ },
+ "Q07": {
+  "kind": "split",
+  "question": "Đường Quả dọn khỏi biệt thự vào ngày nào, và sau đó Lãnh Duệ nói nàng là gì của Lãnh Tử Việt?",
+  "variants": [
+   "Đường Quả dọn khỏi biệt thự vào ngày nào?",
+   "Sau đó Lãnh Duệ nói Đường Quả là gì của Lãnh Tử Việt?"
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "generated_at": "2026-11-12T15:13:21"
+ },
+ "Q03": {
+  "kind": "rewrite",
+  "question": "Lãnh Tử Việt đưa cho Đường Quả loại bút gì?",
+  "variants": [
+   "Lãnh Tử Việt đem Đường Quả đưa cho cái gì loại bút?",
+   "Lãnh Tử Việt ban cho Đường Quả hoàng kim bút gì?"
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "generated_at": "2026-11-12T15:13:23"
+ },
+ "Q08": {
+  "kind": "rewrite",
+  "question": "Nếu không muốn gọi nàng là mẹ, Đường Quả bảo Lãnh Tử Việt gọi nàng là gì?",
+  "variants": [
+   "Nhược bất năng xưng hô nhã thị mẫu thân, Đường Quả lệnh Lãnh Tử Việt xưng hô nhã thị hà vật?",
+   "Như nhược bất dục hô kỳ vi mẫu thân, Đường Quả nãi nhượng Lãnh Tử Việt hô kỳ vi hà?"
+  ],
+  "model": "gemini-3.5-flash-lite",
+  "generated_at": "2026-11-12T15:13:25"
+ }
+}

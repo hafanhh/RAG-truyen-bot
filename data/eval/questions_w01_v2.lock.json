@@ -1,0 +1,12 @@
+{
+ "sha256": "d31f42a399b2c0e8134b56a8ed335f74d7f3e83816b836c55a0a918fd830388e",
+ "locked_at": "2026-11-12T20:59:29",
+ "n_questions": 19,
+ "history": [
+  {
+   "relocked_at": "2026-11-12T20:59:29",
+   "previous_sha256": "bd0428c77d384cc235024f7cae3c9a9b7127cc730c75657e4375d5da28ea9d6c",
+   "reason": "Mốc 0: rút trích dẫn nguyên văn khỏi note/expected_answer (N04,N05,P3b) vì repo public; question/evidence/set/pair không đổi (xem --diff-gold); đổi phạm vi hash sang các trường gold"
+  }
+ ]
+}

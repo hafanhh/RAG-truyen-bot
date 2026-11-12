@@ -1,0 +1,25 @@
+{
+ "about": "Ghi chú nghi vấn SAU khi khóa (không sửa gold). Mỗi mục: {date, qid, note}.",
+ "notes": [
+  {
+   "date": "2026-11-12",
+   "qid": "N01",
+   "note": "Review mốc 20261112-155327-hybrid-header-k5-e0: đáp án đúng nhưng inline đ2–3 chưa nêu câu đ7 nối alias Kỳ Kỳ/Lục Kỳ; đ7 nằm trong chunk đã gửi."
+  },
+  {
+   "date": "2026-11-12",
+   "qid": "P1b",
+   "note": "Review mốc 20261112-155327-hybrid-header-k5-e0: claim thêm Lãnh Duệ đưa sách cần đ29, có trong chunk nhưng ngoài inline đ30–31."
+  },
+  {
+   "date": "2026-11-12",
+   "qid": "P2b",
+   "note": "Review mốc 20261112-155327-hybrid-header-k5-e0: context chứa ch1 đ10 (hắn tưởng nàng sớm đã rơi lệ); từ chối là bỏ sót bằng chứng, không phải thiếu context."
+  },
+  {
+   "date": "2026-11-12",
+   "qid": "N06",
+   "note": "Review mốc 20261112-155327-hybrid-header-k5-e0: đã gửi c053-k00, đáp án trong chunk liền sau c053-k01; ứng viên thử lấy lân cận, chưa cần chia lại chunk."
+  }
+ ]
+}

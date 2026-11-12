@@ -1,0 +1,16 @@
+# Gemini SDK (google-genai) + đọc .env
+google-genai>=3.0.0
+python-dotenv>=1.0.0
+
+# V1+: VectorDB local (lưu chunks, metadata, truy vấn tương đồng)
+chromadb>=1.5.9
+
+# V1+: embedding model chạy local (vd BAAI/bge-m3) và tokenizer để đếm token.
+# Kéo theo torch và transformers; model bge-m3 (~2GB) chỉ được tải về khi dùng lần đầu.
+sentence-transformers>=6.2.0
+
+# V6: giao diện chatbot demo
+streamlit>=1.67.0
+
+# Tiện ích
+tqdm>=4.66.0

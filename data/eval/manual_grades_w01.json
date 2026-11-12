@@ -1,0 +1,39 @@
+{
+  "run": "data/traces/20261112-090852-hybrid-header-k5-e0 (mốc: prompt v3, hybrid-header, k=5, không mở rộng). Chấm bởi Claude, đọc câu trả lời đối chiếu expected_answer; người dùng nên kiểm lại vài câu.",
+  "vocabulary": "đúng | một phần | sai | từ chối (mô hình trả 'không đủ thông tin'). 'ambiguous_question': câu hỏi mơ hồ, báo cáo riêng. 'aspects': chấm tách bạch nhiều mặt khi cần.",
+  "revision_log": [
+    "r1 (2026-11-12): chấm lần đầu cho lần chạy mốc.",
+    "r2 (2026-11-12): H01 từ 'đúng' xuống 'một phần' (đã âm thầm nới tiêu chí ở r1); H03 chấm tách ba mặt theo nhận xét của người dùng."
+  ],
+  "grades": {
+    "Q01": {"grade": "từ chối", "note": "bằng chứng không được tìm ra; từ chối trung thực (ổn định 4/4 lần chạy lại với cấu hình này). Ở v2 và ở k5+mở rộng thì câu này bị trả lời tự tin SAI bằng cảnh ở chương 59."},
+    "Q02": {"grade": "đúng"},
+    "Q03": {"grade": "đúng"},
+    "Q04": {"grade": "đúng"},
+    "Q05": {"grade": "đúng", "note": "dựa vào đoạn giọng 'hệ thống' ở chương 61, không dùng đoạn tường thuật ở chương 58"},
+    "Q06": {"grade": "đúng", "note": "trả lời phần Lãnh Duệ đáp lại (danh thiếp)"},
+    "Q07": {"grade": "một phần", "note": "r2: đúng nửa đầu (dọn đi đúng ngày chung kết); nửa sau trả 'không đủ thông tin' trong khi chunk c075-k00 ĐÃ GỬI có ch75 đ11 (Lãnh Duệ nói 'các ngươi mẹ'), nên đây là bỏ sót bằng chứng đã có, không phải thiếu bằng chứng (phát hiện nhờ lượt kiểm tra Step 7; bản r1 ghi nhầm là thiếu bằng chứng)"},
+    "Q08": {"grade": "đúng"},
+    "Q09": {"grade": "từ chối", "note": "chunk gửi đi (đ30-41) thiếu đ29 là đoạn nói Lãnh Duệ đưa sách; từ chối hợp lý với những gì được gửi"},
+    "Q10": {"grade": "đúng"},
+    "U1": {"grade": "từ chối", "note": "câu ngoài truyện, từ chối đúng"},
+    "U2": {"grade": "từ chối", "note": "câu ngoài truyện, từ chối đúng"},
+    "H01": {"grade": "một phần", "ambiguous_question": true, "note": "r2 (2026-11-12, sửa lại cách chấm): bản đầu chấm 'đúng' và âm thầm chấp nhận thêm 'chi phiếu', đó là nới tiêu chí. Câu trả lời lấy 'ly trà sữa' từ ch1 đ19 (thời điểm SAU trong cảnh, không phải khoảnh khắc mở đầu ở đ5) và nói cô cầm cả tờ chi phiếu 'ở đầu truyện', mà lúc mở đầu (đ5) cô chỉ cầm ly trà sữa. Câu hỏi mơ hồ về thời điểm; câu hỏi đã làm rõ là Q01 (cảnh mở đầu, cúi đầu, hai tay nắm chặt). Báo cáo H01 riêng, không gộp vào 'đúng'."},
+    "H02": {"grade": "đúng"},
+    "H03": {
+      "grade": "một phần",
+      "note": "chấm riêng ba mặt (r2, theo nhận xét của người dùng, đã đối chiếu trace)",
+      "aspects": {
+        "bỏ sót bằng chứng ĐÃ CÓ": "ch1 đ17 (nàng vẫn đang cười, tiếng cười khiến cả tiệm chú ý) nằm trong chunk c001-k02 đã gửi nhưng câu trả lời bỏ qua",
+        "THIẾU bằng chứng cho một phần đáp án": "ch1 đ10 (nữ hài ngẩng đầu, biểu tình bình tĩnh) chỉ nằm trong c001-k01, chunk này KHÔNG được gửi; không thể yêu cầu LLM khôi phục phần 'ngẩng lên bình tĩnh' từ đầu vào hiện có",
+        "SAI địa chỉ trích dẫn": "hai trích dẫn có cấu trúc đảo số đoạn: câu của đ6 ghi là đ5, câu của đ5 ghi là đ6 (kiểm tra tự động báo other_para)"
+      }
+    },
+    "H04": {"grade": "đúng"},
+    "H05": {"grade": "đúng"},
+    "H06": {"grade": "đúng", "note": "chỉ nêu năm ngàn vạn, không nêu việc sau đó đổi thành chi phiếu 3000 vạn"},
+    "H07": {"grade": "đúng"},
+    "H08": {"grade": "đúng"},
+    "H10": {"grade": "đúng"}
+  }
+}
